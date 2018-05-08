@@ -1,0 +1,129 @@
+
+# =============================================================================
+# Writer : Ted,Jung (Consulting Architect @Elastic.co)
+# Date: 2018.05.04
+# Description:
+#       ESrally는 Elasticsearch(이하 ES) 클러스터를 벤치마킹을 목적으로 사용하고
+#       벤치마킹용 데이터가 기본적으로 "track" 이라는 이름으로 제공되고 선택가능하다.
+#       (실행중 리모트로부터 다운로드)
+#       파일크기는 수백KB에서 수GB까지 다양하고, 데이터건수는 수십만건에서 수억건으로 구성되어 있다.
+# =============================================================================
+
+
+# =============================================================================
+# How to install
+# =============================================================================
+    https://esrally.readthedocs.io/en/0.10.1/install.html
+
+
+# =============================================================================
+# Which options do we select to execute ESRally?
+# =============================================================================
+
+    기본적인 실행옵션은 다음 옵션들과 함께 실행 할 수 있다.
+
+    ### tracks (옵션1)
+    . ES대상의 테스트에 사용 될 가상의 벤치마크 시나리오를 내용으로 하며
+      각 시나리오별로 특화된 데이터(트랙별로 다운로드)를 "challenge"라 불리는 예정된 시나리오를 수행
+      트랙종류-
+        i.g) geopoint, http_logs(server log), pmc(full text benchmark), etc
+
+    . 트랙종류 확인 명령어
+        > esrally list tracks
+
+    ### pipeline (옵션2)
+    . 컨피큐레이션을 통해 파이프라인 옵션을 적용할 수 있습니다.
+      파일프라인은 실행결과를 받기위한 방법과 절차를 말하며 다음의 4가지 종류가 있다.
+
+      - benchmark-only (기본적으로 사용됨)
+        : 현재 운영중인(개발/스테이징/프로덕션) 클러스터중 하나를 타켓으로 테스트시 옵션
+        <주의>
+        : 실제 운영중인 클러스터대상으로 테스트시 운영 환경에 영향을 줄 수 있습니다.
+          테스트로 운영중인 곳에 사전진행을 통해 툴을 익히는 사전단계가 필요합니다.
+          이후, 환경(시간,상황,대상)을 고려하여 다른 환경에 실행하기 바랍니다.
+
+      - from-distribution
+        : Rally를 통해 테스트용도로 ES클러스터를 인터넷으로부터 다운받는등 가능한 옵션
+
+      * 이외에도 아래와 같은 옵션이 제공됨니다.
+      - from-sources-complete
+      - from-source-skip-build
+
+    ### target-hosts (옵션3)
+    . 현재 클러스터를 구성하는 ES리스트로 콤마로 구분하여 여러개 지정가능
+      주로 데이터를 저장하는 데이터 노드리스트를 적어주면 됨
+
+    ### check more options
+    > esrally -h
+
+
+# =============================================================================
+# How to execute esrally?
+# configure를 통해 디렉토리등 기본구조 생성 (최초 한번 실행))
+# X-pack의 설치여부에 따라 실행옵션이 상이
+# =============================================================================
+    > esrally configure
+
+    example1) X-Pack 설치 환경
+    > esrally \
+      --track=pmc \
+      --target-hosts=localhost:9200 \
+      --pipeline=benchmark-only \
+      --client-options="use_ssl:false,verify_certs:true,basic_auth_user:'elastic',basic_auth_password:'changeme'"
+
+    example2) X-pack 미설치 환경
+    > esrally \
+      --track=pmc \
+      --target-hosts=10.5.5.10:9200,10.5.5.11:9200,10.5.5.12:9200 \
+      --pipeline=benchmark-only
+
+
+# =============================================================================
+# Step by step
+# =============================================================================
+    1. esrally configure 수행
+
+    2. cd ~/.rally/
+
+    3. vi rally.ini
+
+    4. edit [reporting]
+       datastore.type = Elasticsearch
+       datastore.host = [elastichost]  <= 이부분은 현재ES 클러스터의 IP or DNS로변경
+       datastore.port = 9200
+       datastore.secure = False  <= ssl을 사용한다면 true
+       datastore.user = [User]   <= 없으면 공백
+       datastore.password = [pwd] <= 없으면 공백
+
+    5. "How to execute esrally에서 명령어중 조건에 맞는것으로 실행
+
+    6. 결과를 기다리고 Output을 모니터링
+       => 결과해석은 다음URL의 각항목별로 내용을 이해할수 있도록 기술되어 있음
+          https://esrally.readthedocs.io/en/0.10.1/summary_report.html
+
+
+# =============================================================================
+# Which insight do you get from the output?
+# Description:
+#       Need to understand each values of listed metric from output
+#       클러스터의 값을 변화시키고 그에따라 이전값과의 비교를 통해
+#       해당요소가 주요한지 어떤의미를 갖는지 이해할 수 있다.
+# =============================================================================
+    Summary 리포트에는 다음의 항목들이 결과값으로 제시된다.
+    . GC사용 결과
+    . Indexing time
+    . Index flush time
+    . Throughput
+    . etc (다수)
+
+    결과값은 즉시 확인 가능하고, 매번 실행후 이전 결과값(any ID)과 비교분석가능
+    > esrally list races
+    > esrally compare --baseline=[ID] --contender=[ID]
+      esrally compare --baseline=20180427T094430Z --contender=20180427T130532Z
+
+
+# =============================================================================
+# Reference Documentation
+# : URL has more details
+# =============================================================================
+    https://esrally.readthedocs.io/en/stable/#
