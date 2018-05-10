@@ -73,14 +73,19 @@
              : define a few paramters 
                (name of index, location of document, challenges)
            . real document in json
-    
+           
+    ### Lets check whether it is listed by esrally
+        > esrally list tracks --track-path ~/.rally/rally-tracks/tutorial
+        
     ### How to run esrally with local data(my data)
         : pretty much same except to add option "--track-path" in which point
           related new track files located
         > esrally --track-path=~/.rally/rally-tracks/tutorial \
                   --target-host=localhost:9200 \
                   --pipeline=benchmark-only --client-options="use_ssl:false,verify_certs:true,basic_auth_user:'elastic',basic_auth_password:'magicword'"
-
+    
+    ### How to check whether it was configured well?
+        > --test-mode option
 
 # =============================================================================
 # How to execute esrally?
