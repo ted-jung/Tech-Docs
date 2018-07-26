@@ -2,7 +2,7 @@
 # =============================================================================
 # Writer : Ted,Jung (Consulting Architect @Elastic.co)
 # Date: 2018.05.04
-# last updated: 2018.05.10
+# last updated: 2018.06.10
 # Description:
 #       ESrally는 Elasticsearch(이하 ES) 클러스터를 벤치마킹을 목적으로 사용하고
 #       벤치마킹용 데이터가 기본적으로 "track" 이라는 이름으로 제공되고 선택가능하다.
@@ -62,28 +62,28 @@
 # How to add track of mine?
 # =============================================================================
     ### Can add my track with my real data.
-        and can leverage esrally 
-    
+        and can leverage esrally
+
     ### Steps
         1. Create Directory under .rally (other directory is ok)
         2. Prepare three files
            . index.json
              : need to define settings & mappings to create Index
            . tarck.json
-             : define a few paramters 
+             : define a few paramters
                (name of index, location of document, challenges)
            . real document in json
-           
+
     ### Lets check whether it is listed by esrally
         > esrally list tracks --track-path ~/.rally/rally-tracks/tutorial
-        
+
     ### How to run esrally with local data(my data)
         : pretty much same except to add option "--track-path" in which point
           related new track files located
         > esrally --track-path=~/.rally/rally-tracks/tutorial \
                   --target-host=localhost:9200 \
                   --pipeline=benchmark-only --client-options="use_ssl:false,verify_certs:true,basic_auth_user:'elastic',basic_auth_password:'magicword'"
-    
+
     ### How to check whether it was configured well?
         > --test-mode option
 
