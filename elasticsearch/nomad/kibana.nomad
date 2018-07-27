@@ -71,7 +71,7 @@ job "es-cluster-job" {
       kill_signal  = "SIGTERM"
 
       config {
-        image   = "artifactory.healthcare.huarahi.health.govt.nz:5000/kibana:6.3.0"
+        image   = "artifactory.aa.com:5000/kibana:6.3.0"
         command = "kibana"
 
         # https://www.elastic.co/guide/en/kibana/current/settings.html

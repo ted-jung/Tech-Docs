@@ -66,12 +66,12 @@ job "nsh_es_cluster" {
 
       # env for master/data container
       env {
-        ZEN_HOSTS="[10.69.25.27,10.17.28.40,10.100.2.54]"
+        ZEN_HOSTS="[10.0.0.1,10.0.0.2,10.0.0.3]"
         MIN_MASTER="2"
-        HOST_IP="10.100.2.54"
+        HOST_IP="10.100.0.54"
         ELASTIC_PASSWORD="h!e@a#l$t%h^"
-        ELASTIC_WATCHER_EMAIL="ES-Watcher <NO_REPLY@hanz.healthalliance.nz>"
-        HA_SMTP_HOST="app-smtp.hanz.health.nz"
+        ELASTIC_WATCHER_EMAIL="ES-Watcher <NO_REPLY@aa.com>"
+        HA_SMTP_HOST="app-smtp.aa.com"
         HA_SMTP_PORT="25"
         CERTS_DIR="/usr/share/elasticsearch"
       }
@@ -84,7 +84,7 @@ job "nsh_es_cluster" {
         dns_options = []
         interactive = true
 
-        image   = "artifactory.healthcare.huarahi.health.govt.nz:5000/elasticsearch:6.3.0"
+        image   = "artifactory.aa.com:5000/elasticsearch:6.3.0"
         command = "elasticsearch"
         args = [
           "-Ebootstrap.memory_lock=true",                             # lock all JVM memory on startup
