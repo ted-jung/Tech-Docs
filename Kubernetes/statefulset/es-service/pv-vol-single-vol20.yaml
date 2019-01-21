@@ -1,0 +1,22 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: ted-vol1
+spec:
+  capacity:
+    storage: 8000Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol1
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle

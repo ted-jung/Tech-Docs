@@ -1,0 +1,331 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol1
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol1
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol2
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol2
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol3
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol3
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol4
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol4
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol5
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol5
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol6
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol6
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol7
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol7
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol8
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol8
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol9
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol9
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol10
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol10
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol11
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol11
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol12
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol12
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol13
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol13
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol14
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol14
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: vol15
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-fast
+  rbd:
+    monitors:
+    - 10.140.0.7:6789
+    pool: k8s
+    image: vol15
+    user: k8s
+    secretRef:
+      name: ceph-secret
+    fsType: ext4
+    readOnly: false
+  persistentVolumeReclaimPolicy: Recycle
+---
