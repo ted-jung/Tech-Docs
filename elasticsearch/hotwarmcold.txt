@@ -1,0 +1,136 @@
+GET _cluster/settings?include_defaults
+GET _cat/nodes?v
+GET _cat/nodeattrs?v
+PUT _cluster/settings
+{
+  "transient": {
+    "indices.lifecycle.poll_interval": "5s"
+  }
+}
+
+# 1. Create Policy First
+PUT _ilm/policy/ted_ilm_policy
+{
+  "policy": {
+    "phases": {
+      "hot": {
+        "actions": {
+          "rollover": {
+            "max_size": "2k",
+            "max_age": "1m"
+          }
+        }
+      },
+      "warm": {
+        "min_age": "2m",
+        "actions": {
+          "forcemerge": {
+            "max_num_segments": 1
+          },
+          "allocate": {
+            "number_of_replicas": 0,
+            "require": {
+              "hotwarm": "cold"
+            }
+          },
+          "shrink": {
+            "number_of_shards": 1
+          }
+        }
+      },
+      "delete": {
+        "min_age": "3m",
+        "actions": {
+          "delete": {}
+        }
+      }
+    }
+  }
+}
+
+# 2. Apply policy to index which is created by Template
+PUT _template/ted_template
+{
+  "index_patterns": [
+    "ted-*"
+  ],
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1,
+    "index.lifecycle.name": "ted_ilm_policy",
+    "index.lifecycle.rollover_alias": "ted-alias",
+    "index.routing.allocation.require.hotwarm": "hot"
+  }
+}
+
+# 3. Create data on alias (i.g, ted-2019.07.13-000001)
+PUT %3Cted-%7Bnow%2Fd%7D-000001%3E
+    {
+        "aliases": {
+            "ted-alias": {
+                "is_write_index": true
+            }
+        }
+    }
+
+PUT ted-000001
+{
+  "aliases": {
+    "ted-alias": {
+      "is_write_index": true
+    }
+  }
+}
+
+# 4. Index data
+PUT ted-alias/_doc/1
+{
+  "name": "sing",
+  "place": "singapore-update"
+}
+
+# 5. How to check policy
+GET ted_alias/_ilm/explain
+DELETE ted-2019.07.13-000001
+
+# PUT data =================================
+PUT ted-alias/_doc/1
+{
+  "name": "sing",
+  "place": "singapore-update"
+}
+PUT ted-alias/_doc/2
+{
+  "name": "canada2",
+  "place": "canada2"
+}
+PUT ted-alias/_doc/3
+{
+  "name": "japan",
+  "place": "japan"
+}
+#-----------------------------
+PUT ted-alias/_doc/5
+{
+  "name": "sing4",
+  "place": "china4"
+}
+PUT ted-alias/_doc/9
+{
+  "name": "america",
+  "place": "america"
+}
+PUT ted-alias/_doc/10
+{
+  "name": "korea",
+  "place": "korea"
+}
+# GET data =================================
+
+GET ted-alias/_search
+{"query": {"match_all": {}}}
+
+POST ted-alias/_refresh
+
+GET ted-alias/_ilm/explain
+
